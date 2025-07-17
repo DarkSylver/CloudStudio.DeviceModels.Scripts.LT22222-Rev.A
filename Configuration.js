@@ -9,39 +9,30 @@ function getConfiguration(config)
   // For instance, if the address of the device is actually a MAC 
   // address, you may want to use the code below.
   
-  config.addressLabel = {en: "DevEUI", es: "DevEUI"};
+  // config.addressLabel = {en: "MAC address", es: "Dirección MAC"};
 }
 
 function getEndpoints(deviceAddress, endpoints)
 {
+  // This function allows you to indicate the initial endpoint configuration
+  // when a device is created using this model. This improves end-user 
+  // experience significantly, because it allows the platform to create
+  // all endpoints included in the device automatically when the device
+  // is created.
 
-    var ACI1_mA = endpoints.addEndpoint("1", " Analog Current Input 1 ", endpointType.genericSensor);
-    ACI1_mA.variableTypeId = 1196;
+  // In the code below, two endpoints are created. The first is a
+  // temperature sensor, while the second one is a carbon dioxide sensor.
 
-    var ACI2_mA = endpoints.addEndpoint("2", " Analog Current Input 2 ", endpointType.genericSensor);
-    ACI2_mA.variableTypeId = 1196;
-
-    var AVI1_V = endpoints.addEndpoint("3", " Analog Voltage Input 1 ", endpointType.genericSensor);
-    AVI1_V.variableTypeId = 1197;
-
-    var AVI2_V = endpoints.addEndpoint("4", "Analog Voltage Input 2", endpointType.genericSensor);
-    AVI2_V.variableTypeId = 1197;
-
-    var di1 = endpoints.addEndpoint("5", "DI1_status", endpointType.genericSensor);
-    di1.variableTypeId = 1208;
-
-    var di2 = endpoints.addEndpoint("6", "DI2_status", endpointType.genericSensor);
-    di2.variableTypeId = 1208;
-
-    var do1 = endpoints.addEndpoint("7", "DO1_status", endpointType.appliance);
-
-    var do2 = endpoints.addEndpoint("8", "DO2_status", endpointType.appliance);
-
-    var ro1 = endpoints.addEndpoint("9", "RO1_status", endpointType.appliance);
-
-    var ro2 = endpoints.addEndpoint("10",  "RO2_status", endpointType.appliance);
+   endpoints.addEndpoint("1", "Temperature sensor", endpointType.temperatureSensor);
+   endpoints.addEndpoint("2", "CO2 sensor", endpointType.ppmConcentrationSensor, ppmConcentrationSensorSubType.carbonDioxide);
+   endpoints.addEndpoint("3", "Humidity sensor", endpointType.humiditySensor);
+   endpoints.addEndpoint("4", "Humedad del suelo", endpointType.humiditySensor);
+   endpoints.addEndpoint("5", "Motion sensor", endpointType.iasSensor, iasEndpointSubType.presenceSensor);
+   endpoints.addEndpoint("6", "Valvula", endpointType.appliance,applianceEndpointSubType.valve);
+   endpoints.addEndpoint("7", "Puertas y Ventanas", endpointType.iasSensor, iasEndpointSubType.doorSensor);
+   var e = endpoints.addEndpoint("8", "Luz", endpointType.genericSensor);
+   e.variableTypeId = 1012;
 }
-
 
 function validateDeviceAddress(address, result)
 {
